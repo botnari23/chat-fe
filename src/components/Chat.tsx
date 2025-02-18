@@ -4,9 +4,9 @@ import { usePusher } from "@/contexts/PusherContext";
 import { useState } from "react";
 import axios from "axios";
 
-
 export default function Chat() {
-  const { messages } = usePusher();
+  const pusherContext = usePusher();
+  const messages = pusherContext ? pusherContext.messages : [];
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
 
@@ -26,14 +26,14 @@ export default function Chat() {
         }
       );
       setMessage("");
-    } catch (error: any) {
+    } catch {
       console.error(
-        "Failed to send message:",
-        error.response?.data || error.message
+        "Failed to send message:"
+        // error.response?.data || error.message
       );
     }
   };
-
+  type Message = { sender: string; message: string };
   return (
     <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded-lg text-black">
       <h1 className="text-xl font-bold mb-4">Chat</h1>
@@ -47,7 +47,7 @@ export default function Chat() {
       />
 
       <div className="border h-60 p-2 overflow-y-auto mb-2">
-        {messages.map((msg: any, index: any) => (
+        {messages.map((msg: Message, index: number) => (
           <p key={index}>
             <strong>{msg.sender}:</strong> {msg.message}
           </p>

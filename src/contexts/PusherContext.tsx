@@ -1,8 +1,12 @@
 "use client";
 import { createContext, useEffect, useState, useContext } from "react";
 import Pusher from "pusher-js";
-
-const PusherContext = createContext<any>(null);
+type Message = { sender: string; message: string };
+type PusherContextType = {
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+};
+const PusherContext = createContext<PusherContextType | null>(null);
 
 export const PusherProvider = ({ children }: { children: React.ReactNode }) => {
   const [messages, setMessages] = useState<
