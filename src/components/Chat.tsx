@@ -2,7 +2,8 @@
 import { usePusher } from "@/contexts/PusherContext";
 
 import { useState } from "react";
-const axios = require("axios");
+import axios from "axios";
+
 
 export default function Chat() {
   const { messages } = usePusher();
